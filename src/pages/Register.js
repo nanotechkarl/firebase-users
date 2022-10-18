@@ -12,14 +12,9 @@ export default function Register() {
 
   //#region - REGISTER
   const onSubmit = async (e) => {
-    const { name, email, password, confirmPassword } = values;
+    const { name, email } = values;
 
-    if (confirmPassword !== password) {
-      alert("Password does not match");
-      return false;
-    }
-
-    const register = await dispatch(registerUser({ email, password, name }));
+    const register = await dispatch(registerUser({ email, name }));
 
     if (register) {
       navigate(pages.welcome);
@@ -28,11 +23,10 @@ export default function Register() {
   //#endregion
 
   //#region - CUSTOM HOOKS
-  const inputCount = 4;
+  const inputCount = 2;
   const { handleChange, values, errors, handleSubmit } = useForm({
     callback: onSubmit,
     inputCount,
-    inputType: "register",
   });
   //#endregion
 
@@ -82,47 +76,6 @@ export default function Register() {
               />
               {errors.email ? (
                 <p className="input-error err-email">{errors.email}</p>
-              ) : (
-                <p>&nbsp;</p>
-              )}
-            </div>
-
-            <div className="password-div">
-              <label htmlFor="password">
-                <b>Password</b>
-              </label>
-              <input
-                className="input-text"
-                type="password"
-                id="password"
-                name="password"
-                placeholder="*****"
-                onChange={handleChange}
-                autoComplete="on"
-              />
-              {errors.password ? (
-                <p className="input-error err-password">{errors.password}</p>
-              ) : (
-                <p>&nbsp;</p>
-              )}
-            </div>
-
-            <div className="confirm-password-div">
-              <label htmlFor="confirm-password">
-                <b>Confirm Password</b>
-              </label>
-              <input
-                className="input-text"
-                type="password"
-                id="confirm-password"
-                name="confirmPassword"
-                placeholder="*****"
-                onChange={handleChange}
-              />
-              {errors.confirmPassword ? (
-                <p className="input-error err-confirm-password">
-                  {errors.confirmPassword}
-                </p>
               ) : (
                 <p>&nbsp;</p>
               )}

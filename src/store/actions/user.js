@@ -1,5 +1,4 @@
-import axios from "axios";
-import { server, getCookie, logout } from "../../utils/config";
+import { getCookie, logout } from "../../utils/config";
 import { ref, set, push, get } from "firebase/database";
 import { firebase } from "../../database/config";
 import { getDatabase } from "firebase/database";
@@ -156,42 +155,7 @@ export const getUserById = ({ id }) => {
 
 //#endregion
 
-//#region - LOGIN/REGISTER
-/**
- * Login user and sets the token in cookies
- * @param {String} email
- * @param {String} password
- * @returns {bool}
- */
-export const loginUser = ({ email, password }) => {
-  return async (dispatch) => {
-    try {
-      const login = await get(userRef).then((snapshot) => {
-        const data = snapshot.val() || {};
-        var array = Object.keys(data).map((k) => {
-          return data[k];
-        });
-
-        //verify
-        let found = array.find(
-          (o) => o.email === email && o.password === password
-        );
-
-        if (found) {
-          document.cookie = `token=${found.id}; max-age=${60 * 60 * 24 * 14}`; //2 weeks
-          return found;
-        } else {
-          return;
-        }
-      });
-
-      if (login) {
-        return true;
-      }
-    } catch (error) {}
-  };
-};
-
+//#region - REGISTER
 /**
  * Register new user
  * @param {String} fullName
@@ -199,10 +163,10 @@ export const loginUser = ({ email, password }) => {
  * @param {String} password
  * @returns {Object}
  */
-export const registerUser = ({ name, email, password }) => {
+export const registerUser = ({ name, email }) => {
   return async (dispatch) => {
     const id = new Date().getTime();
-    const user = { id, name, email, password };
+    const user = { id, name, email };
 
     const processRegister = await get(userRef).then((snapshot) => {
       const data = snapshot.val() || {};
