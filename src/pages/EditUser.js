@@ -28,7 +28,6 @@ export default function EditUser() {
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   const fetchData = async () => {
-    await dispatch(getUsers());
     await dispatch(getUserById({ id: userId }));
     values.email = user.email; //? Set initial state
     values.name = user.name;
