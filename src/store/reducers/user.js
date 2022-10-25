@@ -30,6 +30,9 @@ const userReducer = (state = INITIAL_STATE, action) => {
     //#endregion
 
     //#region - CURRENT USER
+    case "DELETE_USER_REQUEST":
+    case "FETCH_USER_REQUEST":
+    case "EDIT_USER_REQUEST":
     case "CURRENT_USER_REQUEST":
       return {
         ...state,
@@ -55,12 +58,6 @@ const userReducer = (state = INITIAL_STATE, action) => {
     //#endregion
 
     //#region - FETCH USER
-    case "FETCH_USER_REQUEST":
-      return {
-        ...state,
-        loading: true,
-        error: "",
-      };
 
     case "FETCH_USER_SUCCESS":
       return {
@@ -88,14 +85,9 @@ const userReducer = (state = INITIAL_STATE, action) => {
     //#endregion
 
     //#region - EDIT USER
-    case "EDIT_USER_REQUEST":
-      return {
-        ...state,
-        loading: true,
-        error: "",
-      };
-
+    case "DELETE_USER_SUCCESS":
     case "EDIT_USER_SUCCESS":
+    case "DELETE_USER_FAILURE":
       return {
         ...state,
         loading: false,
@@ -106,32 +98,12 @@ const userReducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         loading: false,
-        error: "",
+        error: "Error",
       };
 
     //#endregion
 
     //#region - DELETE USER
-    case "DELETE_USER_REQUEST":
-      return {
-        ...state,
-        loading: true,
-        error: "",
-      };
-
-    case "DELETE_USER_SUCCESS":
-      return {
-        ...state,
-        loading: false,
-        error: "",
-      };
-
-    case "DELETE_USER_FAILURE":
-      return {
-        ...state,
-        loading: false,
-        error: "",
-      };
     //#endregion
 
     default:

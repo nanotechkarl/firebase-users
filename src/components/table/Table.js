@@ -17,9 +17,68 @@ const Table = (props) => {
     );
   };
 
+  const renderCustomButtons = (index, row) => {
+    return (
+      <>
+        {(props.onEdit ||
+          props.onDelete ||
+          props.onShare ||
+          props.onRemove) && (
+          <td key={`edit-${index}`}>
+            {props.onEdit && (
+              <button
+                className="table-options"
+                onClick={() =>
+                  props.onEdit(props.functionKey ? row[props.functionKey] : row)
+                }
+              >
+                Edit
+              </button>
+            )}
+            {props.onDelete && (
+              <button
+                className={customDisable(row)} //! custom
+                onClick={() =>
+                  props.onDelete(
+                    props.functionKey ? row[props.functionKey] : row
+                  )
+                }
+              >
+                &nbsp;|&nbsp;Delete
+              </button>
+            )}
+            {props.onShare && (
+              <button
+                className="table-options"
+                onClick={() =>
+                  props.onShare(
+                    props.functionKey ? row[props.functionKey] : row
+                  )
+                }
+              >
+                &nbsp;|&nbsp;Share
+              </button>
+            )}
+            {props.onRemove && (
+              <button
+                className="table-options"
+                onClick={() =>
+                  props.onRemove(
+                    props.functionKey ? row[props.functionKey] : row
+                  )
+                }
+              >
+                Remove
+              </button>
+            )}
+          </td>
+        )}
+      </>
+    );
+  };
+
   const renderBody = (data) => {
     const keys = props.keys;
-
     const table = data.map((row, index) => {
       return (
         <tr key={index}>
@@ -32,61 +91,7 @@ const Table = (props) => {
           })}
 
           {/* CUSTOM FUNCTIONALITIES */}
-          {(props.onEdit ||
-            props.onDelete ||
-            props.onShare ||
-            props.onRemove) && (
-            <td key={`edit-${index}`}>
-              {props.onEdit && (
-                <button
-                  className="table-options"
-                  onClick={() =>
-                    props.onEdit(
-                      props.functionKey ? row[props.functionKey] : row
-                    )
-                  }
-                >
-                  Edit
-                </button>
-              )}
-              {props.onDelete && (
-                <button
-                  className={customDisable(row)} //! custom
-                  onClick={() =>
-                    props.onDelete(
-                      props.functionKey ? row[props.functionKey] : row
-                    )
-                  }
-                >
-                  &nbsp;|&nbsp;Delete
-                </button>
-              )}
-              {props.onShare && (
-                <button
-                  className="table-options"
-                  onClick={() =>
-                    props.onShare(
-                      props.functionKey ? row[props.functionKey] : row
-                    )
-                  }
-                >
-                  &nbsp;|&nbsp;Share
-                </button>
-              )}
-              {props.onRemove && (
-                <button
-                  className="table-options"
-                  onClick={() =>
-                    props.onRemove(
-                      props.functionKey ? row[props.functionKey] : row
-                    )
-                  }
-                >
-                  Remove
-                </button>
-              )}
-            </td>
-          )}
+          {renderCustomButtons(index, row)}
         </tr>
       );
     });

@@ -14,7 +14,7 @@ export default function Register() {
   const onSubmit = async (e) => {
     const { name, email } = values;
 
-    const register = await dispatch(registerUser({ email, name }));
+    const register = dispatch(registerUser({ email, name }));
 
     if (register) {
       navigate(pages.welcome);

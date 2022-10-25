@@ -1,7 +1,6 @@
 import { logout } from "../../utils/config";
-import { ref, set, push, get } from "firebase/database";
+import { ref, set, push, get, getDatabase } from "firebase/database";
 import { firebase } from "../../database/config";
-import { getDatabase } from "firebase/database";
 
 //#region - INITIALIZE
 const database = getDatabase(firebase);
@@ -35,6 +34,7 @@ export const clear = (type) => {
   return {
     type,
     isLoading: false,
+    clear: true,
   };
 };
 
@@ -65,7 +65,7 @@ export const getUsers = () => {
 
       const result = await get(userRef).then((snapshot) => {
         const data = snapshot.val() || {};
-        var array = Object.keys(data).map((k) => {
+        const array = Object.keys(data).map((k) => {
           data[k].key = k;
           return data[k];
         });
@@ -95,7 +95,7 @@ export const getUserById = ({ id }) => {
       dispatch(request("FETCH_USER_REQUEST"));
       const result = await get(userRef).then((snapshot) => {
         const data = snapshot.val() || {};
-        var array = Object.keys(data).map((k) => {
+        const array = Object.keys(data).map((k) => {
           data[k].key = k;
           return data[k];
         });
@@ -131,7 +131,7 @@ export const registerUser = ({ name, email }) => {
 
     const processRegister = await get(userRef).then((snapshot) => {
       const data = snapshot.val() || {};
-      var array = Object.keys(data).map((k) => {
+      const array = Object.keys(data).map((k) => {
         return data[k];
       });
 
@@ -144,7 +144,6 @@ export const registerUser = ({ name, email }) => {
         return user;
       } else {
         alert("User already exists");
-        return;
       }
     });
 
@@ -168,12 +167,12 @@ export const editUser = ({ id, fullName, email }) => {
 
       const result = await get(userRef).then((snapshot) => {
         const data = snapshot.val() || {};
-        var array = Object.keys(data).map((k) => {
+        const array = Object.keys(data).map((k) => {
           data[k].key = k;
           return data[k];
         });
 
-        var found = array.find((x) => x.id === parseInt(id));
+        const found = array.find((x) => x.id === parseInt(id));
 
         if (found) {
           data[found.key] = {
@@ -209,12 +208,12 @@ export const deleteUserById = (id) => {
 
       const result = await get(userRef).then((snapshot) => {
         const data = snapshot.val() || {};
-        var array = Object.keys(data).map((k) => {
+        const array = Object.keys(data).map((k) => {
           data[k].key = k;
           return data[k];
         });
 
-        var found = array.find((x) => x.id === parseInt(id));
+        const found = array.find((x) => x.id === parseInt(id));
 
         if (found) {
           const deleted = data[found.key];

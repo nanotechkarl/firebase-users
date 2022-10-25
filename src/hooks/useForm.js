@@ -12,32 +12,40 @@ const useForm = ({
   const [errors, setErrors] = useState({});
   //#endregion
 
+  const nameCondition = (value, name) => {
+    if (value.length === 0) {
+      setErrors({
+        ...errors,
+        [name]: `Please enter your ${name}`,
+      });
+    } else {
+      let newObj = omit(errors, name);
+      setErrors(newObj);
+    }
+  };
+
+  const confirmCondition = (value) => {
+    if (value.length === 0) {
+      setErrors({
+        ...errors,
+        confirmPassword: "Please confirm your password",
+      });
+    } else {
+      let newObj = omit(errors, "confirmPassword");
+      setErrors(newObj);
+    }
+  };
+
   //#region - VALIDATE
   const validate = (event, name, value) => {
     switch (name) {
       case "myFile":
       case "name":
-        if (value.length === 0) {
-          setErrors({
-            ...errors,
-            [name]: `Please enter your ${name}`,
-          });
-        } else {
-          let newObj = omit(errors, name);
-          setErrors(newObj);
-        }
+        nameCondition(value, name);
         break;
 
       case "confirmPassword":
-        if (value.length === 0) {
-          setErrors({
-            ...errors,
-            confirmPassword: "Please confirm your password",
-          });
-        } else {
-          let newObj = omit(errors, "confirmPassword");
-          setErrors(newObj);
-        }
+        confirmCondition(value);
         break;
 
       case "fileDescription":
@@ -66,11 +74,7 @@ const useForm = ({
         break;
 
       case "email":
-        if (
-          !new RegExp(
-            /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-          ).test(value)
-        ) {
+        if (!new RegExp(/^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/).test(value)) {
           setErrors({
             ...errors,
             email: "Enter a valid email address",
@@ -82,10 +86,7 @@ const useForm = ({
         break;
 
       case "password":
-        if (
-          value.length === 0
-          // !new RegExp(/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,}$/).test(value)
-        ) {
+        if (value.length === 0) {
           setErrors({
             ...errors,
             password: "Please enter your password",
@@ -121,7 +122,7 @@ const useForm = ({
   };
 
   const handleSubmit = (event) => {
-    if (event) event.preventDefault();
+    event.preventDefault();
     let errorsEmpty = {};
 
     if (
@@ -129,44 +130,11 @@ const useForm = ({
       Object.keys(values).length >= inputCount
     ) {
       callback();
-      errorsEmpty = {};
     } else {
-      //custom
-      switch (inputType) {
-        case "register":
-          if (!values.name) {
-            errorsEmpty.name = `Please enter your name`;
-          }
-
-          if (!values.email) {
-            errorsEmpty.email = `Enter a vaild email address`;
-          }
-
-          if (!values.password) {
-            errorsEmpty.password = `Please enter your password`;
-          }
-
-          if (!values.confirmPassword) {
-            errorsEmpty.confirmPassword = `Please confirm your password`;
-          }
-          break;
-
-        case "addUpload":
-          if (!values.fileDescription) {
-            alert("Please enter file description");
-          }
-          break;
-
-        default:
-          break;
-      }
-
       setErrors({
         ...errors,
         ...errorsEmpty,
       });
-
-      return;
     }
   };
   //#endregion

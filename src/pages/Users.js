@@ -26,11 +26,11 @@ export default function Users() {
   }, [lastDeletedAccount]); //eslint-disable-line
 
   const fetchData = async () => {
-    await dispatch(getUsers());
+    dispatch(getUsers());
   };
 
   const refetchAllAfterDelete = async () => {
-    await dispatch(getUsers());
+    dispatch(getUsers());
   };
   //#endregion
 
@@ -47,7 +47,7 @@ export default function Users() {
   };
 
   const confirmDelete = async () => {
-    await dispatch(deleteUserById(deleteAccount.id));
+    dispatch(deleteUserById(deleteAccount.id));
     setDeleteModalState(false);
     setLastDeletedAccount(deleteAccount);
   };

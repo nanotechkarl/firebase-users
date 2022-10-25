@@ -30,14 +30,6 @@
 
 }
 
-.modal-footer {
-    display: flex;
-    justify-content: center;
-    border-top: 0px !important;
-    transform: translate(-30px);
-
-}
-
 .modal-upload {
     .file-upload-div {
         transform: translate(14px,30px);
@@ -56,6 +48,11 @@
 }
 
 .modal-footer {
+    display: flex;
+    justify-content: center;
+    border-top: 0px !important;
+    transform: translate(-30px);
+
     .upload-footer {
         transform: translate(-180px);
 
