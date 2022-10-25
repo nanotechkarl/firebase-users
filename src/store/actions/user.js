@@ -59,37 +59,6 @@ export function signinUser(user) {
 
 //#region - GET
 /**
- * Get logged in user object properties
- * @returns {object} - user object
- * */
-export const getUserObject = () => {
-  return async (dispatch) => {
-    try {
-      dispatch(request("CURRENT_USER_REQUEST"));
-      const result = await get(userRef).then((snapshot) => {
-        const data = snapshot.val() || {};
-        var array = Object.keys(data).map((k) => {
-          data[k].key = k;
-          return data[k];
-        });
-
-        const found = array.find((o) => o.id === parseInt(token));
-        return found;
-      });
-
-      dispatch(success("CURRENT_USER_SUCCESS", result));
-      return result;
-    } catch (error) {
-      if (error && error.response.data.message === "User does not exist") {
-        logout();
-      }
-
-      dispatch(failure("CURRENT_USER_FAILURE"));
-    }
-  };
-};
-
-/**
  * Get All Users
  * @returns {object<array>} users array
  */

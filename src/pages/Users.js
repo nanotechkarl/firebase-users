@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import useDidMountEffect from "../hooks/useDidMountEffect";
 import DeleteModal from "../components/modal/DeleteModal";
 import Table from "../components/table/Table";
-import { getUsers, getUserObject, deleteUserById } from "../store/actions/user";
+import { getUsers, deleteUserById } from "../store/actions/user";
 
 export default function Users() {
   //#region - HOOKS
