@@ -3,7 +3,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import useForm from "../hooks/useForm";
 import { pages } from "../utils/config";
-import { getUserById, clear, editUser, getUsers } from "../store/actions/user";
+import { getUserById, clear, editUser } from "../store/actions/user";
 
 export default function EditUser() {
   //#region - HOOKS

@@ -1,4 +1,4 @@
-import { getCookie, logout } from "../../utils/config";
+import { logout } from "../../utils/config";
 import { ref, set, push, get } from "firebase/database";
 import { firebase } from "../../database/config";
 import { getDatabase } from "firebase/database";
@@ -6,10 +6,6 @@ import { getDatabase } from "firebase/database";
 //#region - INITIALIZE
 const database = getDatabase(firebase);
 const userRef = ref(database, "users/");
-//#endregion
-
-//#region - AUTH
-let token = getCookie("token");
 //#endregion
 
 //#region - DISPATCH
