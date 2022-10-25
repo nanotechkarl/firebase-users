@@ -27,12 +27,10 @@ export default function Users() {
 
   const fetchData = async () => {
     await dispatch(getUsers());
-    await dispatch(getUserObject());
   };
 
   const refetchAllAfterDelete = async () => {
     await dispatch(getUsers());
-    await dispatch(getUserObject());
   };
   //#endregion
 
