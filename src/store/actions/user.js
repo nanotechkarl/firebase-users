@@ -10,10 +10,6 @@ const userRef = ref(database, "users/");
 
 //#region - AUTH
 let token = getCookie("token");
-let headers = {
-  "Content-Type": "application/json",
-  Authorization: `Bearer ${token}`,
-};
 //#endregion
 
 //#region - DISPATCH
